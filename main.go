@@ -1,24 +1,3 @@
-# deepgram-go-client-unofficial
-
-Unofficial client for the [Deepgram](https://deepgram.com) API
-
-## Steps to use
-
-Record an audio PCM 16 bit, rate 8k, mono
-
-```bash
-pw-cat --record audio.raw --channels 1 --rate 8000 
-```
-
-Download the Golang package
-
-```bash
-go get -v github.com/pablodz/deepgram-go-client-unofficial
-```
-
-Create a client
-
-```golang
 package main
 
 import (
@@ -77,22 +56,3 @@ func main() {
 		}
 	}
 }
-
-```
-
-Run the program
-
-```bash
-go run main.go
-```
-
-Get responses
-```bash
-Client created at  wss://api.deepgram.com/v1/listen?sample_rate=8000&language=es&channels=1&
-Confidence 0.8496094    Message:  hola
-Confidence 0.99902344   Message:  esto es una prueba
-Confidence 0.9975586    Message:  uno
-Confidence 0.9970703    Message:  dos
-Confidence 0.9921875    Message:  tres
-Confidence 0.9951172    Message:  cuatro
-```
