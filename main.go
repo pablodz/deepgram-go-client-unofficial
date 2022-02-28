@@ -25,7 +25,7 @@ func main() {
 	defer clientWss.Close()
 
 	// Get audio data from file PCM 16 bits, 8000 Hz, mono
-	audioRaw, err := ioutil.ReadFile("audio.raw") // the file is inside the local directory
+	audioRaw, err := ioutil.ReadFile("audio.wav") // the file is inside the local directory
 	if err != nil {
 		panic(err)
 	}
