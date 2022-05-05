@@ -2,8 +2,8 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
+	"sync"
 
 	"github.com/gorilla/websocket"
 	"github.com/pablodz/deepgram-go-client-unofficial/config"
@@ -19,6 +19,18 @@ func SendInBackground(audioRaw []byte, clientWss *websocket.Conn) {
 }
 
 func main() {
+
+	wg := &sync.WaitGroup{}
+	for i := 0; i < 150; i++ {
+		wg.Add(1)
+		go sendOneRequest(wg)
+	}
+	wg.Wait()
+
+}
+
+func sendOneRequest(wg *sync.WaitGroup) {
+	defer wg.Done()
 	// Create websocket client
 	clientWss := config.ConfigSTTDeepgram("YOUR_APIKEY_HERE", "8000", "es", "1")
 	// Close websocket when finish
@@ -37,22 +49,22 @@ func main() {
 	for {
 		_, message, err := clientWss.ReadMessage()
 		if err != nil {
-			if websocket.IsUnexpectedCloseError(err, websocket.CloseGoingAway, websocket.CloseAbnormalClosure) {
-				// Closed from server, dont print close 1011 (internal server error): NET-0001
-				break
-			}
-			fmt.Println("Error reading websocket message response:", err)
+			// fmt.Println("Error reading websocket message response:", err)
+			clientWss.Close()
 			break
 		}
 
 		var resp models.Response
 		if err := json.Unmarshal(message, &resp); err != nil {
-			fmt.Println("Error parsing json response:", err)
+			// fmt.Println("Error parsing json response:", err)
+			// fmt.Println(message)
+			clientWss.Close()
+			break
 		}
 
-		if resp.IsFinal {
-			// Only get final transcript
-			fmt.Println("Confidence", resp.Channel.Alternatives[0].Confidence, "\tMessage: ", resp.Channel.Alternatives[0].Transcript)
-		}
+		// if resp.IsFinal {
+		// 	// Only get final transcript
+		// 	fmt.Println("Confidence", resp.Channel.Alternatives[0].Confidence, "\tMessage: ", resp.Channel.Alternatives[0].Transcript)
+		// }
 	}
 }
