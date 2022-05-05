@@ -7,7 +7,7 @@ Unofficial client for the [Deepgram](https://deepgram.com) API
 Record an audio PCM 16 bit, rate 8k, mono
 
 ```bash
-pw-cat --record audio.raw --channels 1 --rate 8000 
+pw-cat --record audio.wav --channels 1 --rate 8000 
 ```
 
 Download the Golang package

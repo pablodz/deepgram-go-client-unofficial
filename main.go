@@ -21,7 +21,7 @@ func SendInBackground(audioRaw []byte, clientWss *websocket.Conn) {
 func main() {
 
 	wg := &sync.WaitGroup{}
-	for i := 0; i < 150; i++ {
+	for i := 0; i < 1; i++ {
 		wg.Add(1)
 		go sendOneRequest(wg)
 	}
