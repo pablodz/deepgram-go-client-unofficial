@@ -1,5 +1,7 @@
 # deepgram-go-client-unofficial
 
+# NEW sdk community https://github.com/deepgram-devs/deepgram-go-sdk
+
 Unofficial client for the [Deepgram](https://deepgram.com) API
 
 ## Steps to use
